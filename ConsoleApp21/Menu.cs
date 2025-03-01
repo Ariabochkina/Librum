@@ -1,212 +1,245 @@
-﻿using Spectre.Console;
-using Library;
-using System.Text.Json;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
-using static System.Net.Mime.MediaTypeNames;
-using Files;
+﻿using Spectre.Console; 
+using Library; 
+using Files; 
+
 namespace Project4_Library
 {
+    /// <summary>
+    /// Класс Menu предоставляет текстовый пользовательский интерфейс для взаимодействия с библиотекой книг.
+    /// </summary>
     public static class Menu
     {
-        private static Books _books = null;
-        private static string _path = null;
-        private static bool _json = true;
+        private static AllBooks? _books = null; // Библиотека книг
+        private static string? _path = null; // Путь к файлу с данными
+        private static bool _json = true; // Флаг для определения формата файла (JSON или CSV)
+
+        /// <summary>
+        /// Метод, который предлагает пользователю нажать любую клавишу перед продолжением работы программы.
+        /// </summary>
         internal static void Wait()
         {
             Console.WriteLine("Нажмите любую клавишу чтобы продолжить");
             Console.ReadKey();
         }
+
+        /// <summary>
+        /// Метод, который предлагает пользователю ввести путь к файлу,
+        /// из которого будет загружена информация о книгах.
+        /// </summary>
         public static void Start()
         {
-            while (_books == null)
+            while (_books == null) 
             {
                 Console.Clear();
-                _path = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]"+"Введите путь"+"[/]"));
+                _path = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]" + "Введите путь" + "[/]")); // Ввод пути к файлу
                 try
                 {
-                    _books = new Books(_path);
+                    _books = new AllBooks(_path); 
                 }
-                catch (Exception ex)
+                catch (Exception ex) 
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message); 
                     Wait();
                 }
             }
-            Run();
-        }        
+            Run(); 
+        }
+
+        /// <summary>
+        /// Метод, который предлагает пользователю выбрать формат ввода данных.
+        /// </summary>
+        /// <returns>Строка, содержащая выбранный формат ("JSON" или "CSV")</returns>
         private static string Format()
         {
             return AnsiConsole.Prompt(new SelectionPrompt<string>()
-                .Title("Выберете формат для ввода")
-                .AddChoices("JSON", "CSV"));
+                .Title("Выберете формат для ввода") 
+                .AddChoices("JSON", "CSV")); 
         }
+
+        /// <summary>
+        /// Основной цикл программы, предоставляющий пользователю выбор операций.
+        /// </summary>
         private static void Run()
         {
-            string[] options = ["Просмотр всех книг", "Добавление новой книги", 
-                "Редактирование информации о книге", "Удаление книги", "Интерактивная таблица", 
-                "Календарь", "Рекоммендации", "Экспорт", "Импорт", "Сверить и исправить данные на основе openlibrary", 
-                "Добавить книгу по ISBN", "Загрузить обложку", "Выход"];
-            for (int i = 0; i < options.Length - 1; i++)
+            string[] options = ["Просмотр всех книг", "Добавление новой книги",
+                "Редактирование информации о книге", "Удаление книги", "Интерактивная таблица",
+                "Календарь", "Рекоммендации", "Экспорт", "Импорт", "Исправление всех данных на основе openlibrary",
+                "Добавление книги по ISBN", "Загрузка обложки по вашей книге", "Выход"];
+
+            for (int i = 0; i < options.Length - 1; i++) // Применение стилей к опциям
             {
                 options[i] = "[mediumpurple1]" + options[i] + "[/]";
             }
-            options[options.Length - 1] = "[hotpink3_1]" + options[options.Length - 1] + "[/]";
-            while (true)
-            {
-                var style = new Style().Foreground(Color.MistyRose3);
-                Console.Clear();
-                var selection = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                    .Title("[hotpink3_1][italic]Выберете опцию[/][/]")
-                    .HighlightStyle(style)
-                    .AddChoices(options));
-                if (selection == options[options.Length - 1])
-                {
+            options[^1] = "[hotpink3_1]" + options[^1] + "[/]"; // Стиль для опции "Выход"
 
-                    if (_json)
+            while (true) 
+            {
+                Style style = new Style().Foreground(Color.MistyRose3); // Стиль для выбора опций
+                Console.Clear();
+                string selection = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                    .Title("[hotpink3_1][italic]Выберете опцию[/][/]") 
+                    .HighlightStyle(style) 
+                    .AddChoices(options));
+
+                if (selection == options[^1]) // Если выбрано "Выход"
+                {
+                    if (AnsiConsole.Prompt(new ConfirmationPrompt("Вы уверены, что хотите выйти? Все изменения сохранятся."))) // Подтверждение выхода
                     {
-                        try
+                        if (_json) // Если формат JSON
                         {
-                            JSON.ExportJson(_path, _books);
+                            try
+                            {
+                                JSON.ExportJson(_path, _books); 
+                            }
+                            catch (Exception ex) 
+                            {
+                                Console.WriteLine(ex.Message);
+                                Wait();
+                            }
                         }
-                        catch (Exception ex)
+                        else // Если формат CSV
                         {
-                            Console.WriteLine(ex.Message);
-                            Wait();
+                            try
+                            {
+                                CSV.ExportCSV(_path, _books); 
+                            }
+                            catch (Exception ex) 
+                            {
+                                Console.WriteLine(ex.Message);
+                                Wait();
+                            }
                         }
+                        return; 
                     }
-                    else
-                    {
-                        try
-                        {
-                            CSV.ExportCSV(_path, _books);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                            Wait();
-                        }
-                    }
-                    return;
                 }
-                if (selection == options[0])
+
+                if (selection == options[0]) // Если выбрано "Просмотр всех книг"
                 {
                     Console.Clear();
-                    Console.WriteLine(_books);
+                    Console.WriteLine(_books); 
                     Wait();
                 }
-                if (selection == options[1])
+
+                if (selection == options[1]) // Если выбрано "Добавление новой книги"
                 {
                     Console.Clear();
-                    Add.AddBook(_books);
+                    Add.AddBook(_books); 
                 }
-                if (selection == options[3])
+
+                if (selection == options[3]) // Если выбрано "Удаление книги"
                 {
                     Console.Clear();
-                    Delete.DeleteBook(_books);
+                    Delete.DeleteBook(_books); 
                 }
-                if(selection == options[2])
+
+                if (selection == options[2]) // Если выбрано "Редактирование информации о книге"
                 {
                     Console.Clear();
-                    Change.ChangeBook(_books);
+                    Change.ChangeBook(_books); 
                 }
-                if(selection == options[4])
+
+                if (selection == options[4]) // Если выбрано "Интерактивная таблица"
                 {
                     Console.Clear();
-                    BookTable table = new BookTable(_books);
+                    BookTable table = new(_books); 
                 }
-                if (selection == options[5])
+
+                if (selection == options[5]) // Если выбрано "Календарь"
                 {
                     Console.Clear();
-                    BookCalendar calendar = new BookCalendar(_books);
+                    BookCalendar calendar = new(_books);
                     Wait();
                 }
-                if (selection == options[6])
+
+                if (selection == options[6]) // Если выбрано "Рекомендации"
                 {
                     Console.Clear();
-                    Recommendation rec = new Recommendation(_books);
+                    Recommendation rec = new(_books); 
                     Wait();
                 }
-                if (selection == options[7])
+
+                if (selection == options[7]) // Если выбрано "Экспорт"
                 {
                     Console.Clear();
-                    string path = AnsiConsole.Prompt(new TextPrompt<string>("Введите путь"));
-                    if (Format() == "JSON")
+                    string path = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите путь[/]")); 
+                    if (Format() == "JSON") // Если выбран JSON
                     {
                         try
                         {
-                            JSON.ExportJson(path, _books);
+                            JSON.ExportJson(path, _books); 
                         }
-                        catch(Exception ex) 
+                        catch (Exception ex) 
                         {
                             Console.WriteLine(ex.Message);
                             Wait();
                         }
                     }
-                    else
+                    else // Если выбран CSV
                     {
                         try
                         {
-                            CSV.ExportCSV(path, _books);
+                            CSV.ExportCSV(path, _books); 
                         }
-                        catch (Exception ex)
+                        catch (Exception ex) 
                         {
                             Console.WriteLine(ex.Message);
                             Wait();
                         }
                     }
                 }
-                if (selection == options[8])
+
+                if (selection == options[8]) // Если выбрано "Импорт"
                 {
                     Console.Clear();
-                    string path = AnsiConsole.Prompt(new TextPrompt<string>("Введите путь"));
-                    if (Format() == "JSON")
+                    string path = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите путь[/]")); 
+                    if (Format() == "JSON") // Если выбран JSON
                     {
                         try
                         {
-                            _books = new Books(path);
+                            _books = new AllBooks(path); 
                             _path = path;
                             _json = true;
                         }
-                        catch (Exception ex)
+                        catch (Exception ex) 
                         {
                             Console.WriteLine(ex.Message);
                             Wait();
                         }
                     }
-                    else
+                    else // Если выбран CSV
                     {
                         try
                         {
-                            _books = CSV.ImportCSV(path);
+                            _books = CSV.ImportCSV(path); 
                             _path = path;
                             _json = false;
                         }
-                        catch (Exception ex)
+                        catch (Exception ex) 
                         {
                             Console.WriteLine(ex.Message);
                             Wait();
                         }
                     }
                 }
-                if (selection == options[9])
+
+                if (selection == options[9]) // Если выбрано "Сверить и исправить данные на основе openlibrary"
                 {
-                    if (AnsiConsole.Prompt(new ConfirmationPrompt("Вы уверены? В случае наличия данного ISBN, данные изменятся.")))
+                    if (AnsiConsole.Prompt(new ConfirmationPrompt("[mediumpurple1]Вы уверены? В случае наличия данного ISBN, данные изменятся[/]"))) 
                     {
-                        _books.Fetch();
+                        _books.Fetch(); 
                     }
                 }
-                if (selection == options[10])
+
+                if (selection == options[10]) // Если выбрано "Добавить книгу по ISBN"
                 {
-                    string newIsbn = AnsiConsole.Prompt(new TextPrompt<string>("Введите ISBN"));
-                    Book newBook = new Book();
+                    string newIsbn = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите ISBN[/]")); 
+                    Book newBook = new();
                     try
                     {
                         newBook.ISBN = newIsbn;
-                        newBook.Fetch();
-                        _books.Add(newBook);
+                        newBook.Fetch(); // Загрузка данных по ISBN
+                        _books.Add(newBook); 
                     }
                     catch
                     {
@@ -214,10 +247,11 @@ namespace Project4_Library
                         Wait();
                     }
                 }
-                if (selection == options[11])
+
+                if (selection == options[11]) // Если выбрано "Загрузить обложку"
                 {
                     Console.Clear();
-                    Cover.SaveCover(_books);
+                    Cover.SaveCover(_books); 
                     Wait();
                 }
             }

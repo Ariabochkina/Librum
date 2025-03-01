@@ -1,30 +1,32 @@
 ﻿using Library;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project4_Library
 {
+    /// <summary>
+    /// Класс, предоставляющий метод для удаления книги из библиотеки.
+    /// </summary>
     internal static class Delete
     {
-        internal static void DeleteBook(Books _books)
+        /// <summary>
+        /// Метод, который выводит список книг, и предлагает пользователю выбрать, какую из них удалить.
+        /// </summary>
+        /// <param name="_books">Библиотека, из которой будет удалена книга</param>
+        internal static void DeleteBook(AllBooks _books)
         {
-            if (_books.books.Count == 0)
+            if (_books.Books.Count == 0)
             {
                 Console.WriteLine("Нет книг");
                 Menu.Wait();
                 return;
             }
-            string[] strings = new string[_books.books.Count + 1];
+            string[] strings = new string[_books.Books.Count + 1];
             for (int i = 0; i < strings.Length - 1; i++)
             {
-                strings[i] = _books.books[i].ToString();
+                strings[i] = _books.Books[i].ToString();
             }
-            strings[strings.Length - 1] = "Назад";
-            var style = new Style().Foreground(Color.MediumPurple3);
+            strings[^1] = "Назад";
+            Style style = new Style().Foreground(Color.MediumPurple3);
             string book = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("[mediumpurple1]Выберете книгу для удаления[/]")
                 .HighlightStyle(style)
@@ -33,7 +35,7 @@ namespace Project4_Library
             {
                 if (strings[i] == book)
                 {
-                    _books.Remove(_books.books[i]);
+                    _books.Books.Remove(_books.Books[i]);
                     return;
                 }
             }

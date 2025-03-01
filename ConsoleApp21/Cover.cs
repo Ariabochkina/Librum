@@ -1,32 +1,33 @@
 ﻿using Library;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Project4_Library
 {
+    /// <summary>
+    /// Класс, который предлагает пользователю загрузить обложку для выбранной книги.
+    /// </summary>
     internal static class Cover
     {
 
-        internal static void SaveCover(Books _books)
+        /// <summary>
+        /// Метод, который позволяет пользователю загрузить обложку для выбранной книги.
+        /// </summary>
+        /// <param name="_books">Библиотека, в которой хранятся книги</param>
+        internal static void SaveCover(AllBooks _books)
         {
-            if (_books.books.Count == 0)
+            Console.Clear();
+            if (_books.Books.Count == 0)
             {
 
                 Console.WriteLine("Нет книг");
-                Menu.Wait();
                 return;
             }
-            string[] strings = new string[_books.books.Count + 1];
+            string[] strings = new string[_books.Books.Count + 1];
             for (int i = 0; i < strings.Length - 1; i++)
             {
-                strings[i] = _books.books[i].ToString();
+                strings[i] = _books.Books[i].ToString();
             }
-            strings[strings.Length - 1] = "Назад";
-            var style = new Style().Foreground(Color.MediumPurple3);
+            strings[^1] = "Назад";
+            Style style = new Style().Foreground(Color.MediumPurple3);
             string book = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("[mediumpurple1]Выберете книгу для которой хотите загрузить обложку[/]")
                 .HighlightStyle(style)
@@ -37,9 +38,9 @@ namespace Project4_Library
                 {
                     try
                     {
-                        _books.books[i].GetCover();
+                        _books.Books[i].GetCover();
                     }
-                    catch 
+                    catch
                     {
                         Console.WriteLine($"Не удалось найти обложку");
                     }

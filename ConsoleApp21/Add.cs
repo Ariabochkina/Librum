@@ -1,17 +1,20 @@
 ﻿using Library;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project4_Library
 {
+    /// <summary>
+    /// Класс, предоставляющий метод для добавления книги в библиотеку.
+    /// </summary>
     internal static class Add
     {
 
-        internal static void AddBook(Books _books)
+        /// <summary>
+        /// Метод добавления книги. Запрашивает информацию о книге (название, автор, жанр, дату, ISBN)
+        /// и добавляет ее в библиотеку. Если информация некорректна, то выводится сообщение об ошибке.
+        /// </summary>
+        /// <param name="_books">Библиотека, в которую добавляется книга</param>
+        internal static void AddBook(AllBooks _books)
         {
             while (true)
             {
@@ -27,7 +30,7 @@ namespace Project4_Library
                     string[] options = ["Фантастика", "Детектив", "Роман", "История", "Научная литература"];
                     string name = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите название[/]"));
                     string author = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите автора[/]"));
-                    var style = new Style().Foreground(Color.MediumPurple3);
+                    Style style = new Style().Foreground(Color.MediumPurple3); // Стиль для выбора жанра
                     string genre = AnsiConsole.Prompt(new SelectionPrompt<string>()
                         .Title("[mediumpurple1]Выберете жанр[/]")
                         .HighlightStyle(style)
@@ -35,12 +38,15 @@ namespace Project4_Library
                     int date = AnsiConsole.Prompt(new TextPrompt<int>("[mediumpurple1]Введите дату[/]"));
                     string isbn = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите ISBN[/]"));
                     int grade = -1;
-                    Book book = new Book();
-                    book.Name = name;
-                    book.Author = author;
-                    book.Genre = genre;
-                    book.Date = date;
-                    book.ISBN = isbn;
+                    Book book = new()
+                    {
+                        Name = name,
+                        Author = author,
+                        Genre = genre,
+                        Date = date,
+                        ISBN = isbn,
+                        Grade = grade
+                    };
                     _books.Add(book);
                     break;
                 }
