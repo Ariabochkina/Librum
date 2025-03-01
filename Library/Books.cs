@@ -101,6 +101,17 @@ namespace Library
                 books.Reverse();
             }
         }
+        public void Fetch()
+        {
+            for (int i = 0; i < books.Count; i++)
+            {
+                try
+                {
+                    books[i].Fetch();
+                }
+                catch { }
+            }
+        }
         public override string ToString()
         {
             string text = "";

@@ -46,7 +46,8 @@ namespace Project4_Library
         {
             string[] options = ["Просмотр всех книг", "Добавление новой книги", 
                 "Редактирование информации о книге", "Удаление книги", "Интерактивная таблица", 
-                "Календарь", "Рекоммендации", "Экспорт", "Импорт", "Выход"];
+                "Календарь", "Рекоммендации", "Экспорт", "Импорт", "Сверить и исправить данные на основе openlibrary", 
+                "Добавить книгу по ISBN", "Загрузить обложку", "Выход"];
             for (int i = 0; i < options.Length - 1; i++)
             {
                 options[i] = "[mediumpurple1]" + options[i] + "[/]";
@@ -189,6 +190,35 @@ namespace Project4_Library
                             Wait();
                         }
                     }
+                }
+                if (selection == options[9])
+                {
+                    if (AnsiConsole.Prompt(new ConfirmationPrompt("Вы уверены? В случае наличия данного ISBN, данные изменятся.")))
+                    {
+                        _books.Fetch();
+                    }
+                }
+                if (selection == options[10])
+                {
+                    string newIsbn = AnsiConsole.Prompt(new TextPrompt<string>("Введите ISBN"));
+                    Book newBook = new Book();
+                    try
+                    {
+                        newBook.ISBN = newIsbn;
+                        newBook.Fetch();
+                        _books.Add(newBook);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Не удалось добавить книгу");
+                        Wait();
+                    }
+                }
+                if (selection == options[11])
+                {
+                    Console.Clear();
+                    Cover.SaveCover(_books);
+                    Wait();
                 }
             }
         }
