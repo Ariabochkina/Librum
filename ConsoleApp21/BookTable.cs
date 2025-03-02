@@ -1,6 +1,6 @@
 ﻿using Library; 
-using Spectre.Console; 
-
+using Spectre.Console;
+//AI_COMMENTS
 namespace Project4_Library
 {
     /// <summary>
@@ -132,7 +132,7 @@ namespace Project4_Library
                     filtered.Sort(action.Field, sort.Ascending); 
                 }
             }
-            Console.Clear(); 
+           AnsiConsole.Clear(); 
             _table = new Table(); 
             _table.Border = TableBorder.Double; // Установка двойной границы
             _table.BorderColor(Color.MediumPurple3); // Установка цвета границы
@@ -192,7 +192,8 @@ namespace Project4_Library
                     Style styles = new Style().Foreground(Color.MistyRose3);
                     List<string> values = AnsiConsole.Prompt(new MultiSelectionPrompt<string>()
                         .Title("[hotpink3_1]Выберете значения[/]") 
-                        .HighlightStyle(styles) 
+                        .HighlightStyle(styles)
+                        .PageSize(7)
                         .AddChoices((from p in _books.Books select p.GetField(field)).Distinct().ToList())); // Уникальные значения для фильтрации
                     _actions.Add(new Filter { Field = field, Fields = values, Number = _numberFilter++ }); // Добавление фильтрации
                 }

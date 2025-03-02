@@ -1,6 +1,6 @@
 ﻿using Library;
 using Spectre.Console;
-
+//AI_COMMENTS
 namespace Project4_Library
 {
     /// <summary>
@@ -18,13 +18,13 @@ namespace Project4_Library
         {
             while (true)
             {
-                Console.Clear();
+               AnsiConsole.Clear();
                 bool next = AnsiConsole.Prompt(new ConfirmationPrompt("[mediumpurple1]" + "Хотите продолжить?" + "[/]"));
                 if (!next)
                 {
                     return;
                 }
-                Console.Clear();
+               AnsiConsole.Clear();
                 try
                 {
                     string[] options = ["Фантастика", "Детектив", "Роман", "История", "Научная литература"];

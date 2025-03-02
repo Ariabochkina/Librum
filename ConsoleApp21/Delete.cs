@@ -1,6 +1,6 @@
 ﻿using Library;
 using Spectre.Console;
-
+//AI_COMMENTS
 namespace Project4_Library
 {
     /// <summary>
@@ -29,6 +29,7 @@ namespace Project4_Library
             Style style = new Style().Foreground(Color.MediumPurple3);
             string book = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("[mediumpurple1]Выберете книгу для удаления[/]")
+                .PageSize(4)
                 .HighlightStyle(style)
                 .AddChoices(strings));
             for (int i = 0; i < strings.Length - 1; i++)

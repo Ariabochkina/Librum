@@ -1,5 +1,6 @@
 ﻿using Library;
 using Spectre.Console;
+//AI_COMMENTS
 namespace Project4_Library
 {
     /// <summary>
@@ -14,7 +15,7 @@ namespace Project4_Library
         /// <param name="_books">Библиотека, в которой хранятся книги</param>
         internal static void SaveCover(AllBooks _books)
         {
-            Console.Clear();
+            AnsiConsole.Clear();
             if (_books.Books.Count == 0)
             {
 
@@ -31,6 +32,7 @@ namespace Project4_Library
             string book = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("[mediumpurple1]Выберете книгу для которой хотите загрузить обложку[/]")
                 .HighlightStyle(style)
+                .PageSize(4)
                 .AddChoices(strings));
             for (int i = 0; i < strings.Length - 1; i++)
             {

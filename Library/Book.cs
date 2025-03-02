@@ -1,7 +1,7 @@
 ﻿using System.Net; 
 using System.Text.Json;
-using Spectre.Console; 
-
+using Spectre.Console;
+//AI_COMMENTS
 namespace Library
 {
     /// <summary>
@@ -219,7 +219,7 @@ namespace Library
             {
                 string url = root.GetProperty("cover").GetProperty("large").GetString(); // Получение URL обложки
                 client.DownloadFile(new Uri(url), $@"..\..\..\..\{_isbn}.png"); // Сохранение обложки в файл
-                Console.Clear();
+               AnsiConsole.Clear();
                 AnsiConsole.Write($"Путь от корня проекта: {_isbn}.png\n");
                 AnsiConsole.Write(new CanvasImage($@"..\..\..\..\{_isbn}.png"));
             }

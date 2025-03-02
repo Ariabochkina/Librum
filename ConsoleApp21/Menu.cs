@@ -1,7 +1,7 @@
 ﻿using Spectre.Console; 
 using Library; 
-using Files; 
-
+using Files;
+//AI_COMMENTS
 namespace Project4_Library
 {
     /// <summary>
@@ -30,7 +30,7 @@ namespace Project4_Library
         {
             while (_books == null) 
             {
-                Console.Clear();
+               AnsiConsole.Clear();
                 _path = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]" + "Введите путь" + "[/]")); // Ввод пути к файлу
                 try
                 {
@@ -75,7 +75,7 @@ namespace Project4_Library
             while (true) 
             {
                 Style style = new Style().Foreground(Color.MistyRose3); // Стиль для выбора опций
-                Console.Clear();
+                AnsiConsole.Clear();
                 string selection = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                     .Title("[hotpink3_1][italic]Выберете опцию[/][/]") 
@@ -116,52 +116,52 @@ namespace Project4_Library
 
                 if (selection == options[0]) // Если выбрано "Просмотр всех книг"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     Console.WriteLine(_books); 
                     Wait();
                 }
 
                 if (selection == options[1]) // Если выбрано "Добавление новой книги"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     Add.AddBook(_books); 
                 }
 
                 if (selection == options[3]) // Если выбрано "Удаление книги"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     Delete.DeleteBook(_books); 
                 }
 
                 if (selection == options[2]) // Если выбрано "Редактирование информации о книге"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     Change.ChangeBook(_books); 
                 }
 
                 if (selection == options[4]) // Если выбрано "Интерактивная таблица"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     BookTable table = new(_books); 
                 }
 
                 if (selection == options[5]) // Если выбрано "Календарь"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     BookCalendar calendar = new(_books);
                     Wait();
                 }
 
                 if (selection == options[6]) // Если выбрано "Рекомендации"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     Recommendation rec = new(_books); 
                     Wait();
                 }
 
                 if (selection == options[7]) // Если выбрано "Экспорт"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     string path = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите путь[/]")); 
                     if (Format() == "JSON") // Если выбран JSON
                     {
@@ -191,7 +191,7 @@ namespace Project4_Library
 
                 if (selection == options[8]) // Если выбрано "Импорт"
                 {
-                    Console.Clear();
+                   AnsiConsole.Clear();
                     string path = AnsiConsole.Prompt(new TextPrompt<string>("[mediumpurple1]Введите путь[/]")); 
                     if (Format() == "JSON") // Если выбран JSON
                     {
@@ -250,7 +250,7 @@ namespace Project4_Library
 
                 if (selection == options[11]) // Если выбрано "Загрузить обложку"
                 {
-                    Console.Clear();
+                    AnsiConsole.Clear();
                     Cover.SaveCover(_books); 
                     Wait();
                 }
