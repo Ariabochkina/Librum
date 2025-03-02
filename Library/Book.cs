@@ -9,7 +9,7 @@ namespace Library
     /// </summary>
     public class Book
     {
-        private string _name;
+        private string _name = "Неизвестно";
         public string Name
         {
             get => _name;
@@ -23,7 +23,7 @@ namespace Library
             }
         }
 
-        private string _author;
+        private string _author = "Неизвестно";
         public string Author
         {
             get => _author;
@@ -36,7 +36,7 @@ namespace Library
                 _author = value;
             }
         }
-        private string _genre;
+        private string _genre = "Другое";
 
         public string Genre
         {
@@ -66,7 +66,7 @@ namespace Library
                 }
             }
         }
-        private string _isbn;
+        private string _isbn = "9785389193895";
         public string ISBN
         {
             get => _isbn;

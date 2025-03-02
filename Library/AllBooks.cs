@@ -1,6 +1,7 @@
 ﻿using System.Text.Encodings.Web; 
 using System.Text.Json; 
 using System.Text.Unicode;
+using System.Transactions;
 //AI_COMMENTS
 namespace Library
 {
@@ -9,7 +10,18 @@ namespace Library
     /// </summary>
     public class AllBooks
     {
-        public List<Book> Books { get; set; }
+        
+        private List<Book> _books = new List<Book>();
+
+        /// <summary>
+        /// Gets or sets the list of transactions.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown when the value is null.</exception>
+        public List<Book> Books
+        {
+            get => _books;
+            set => _books = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Создает экземпляр AllBooks, загрузив информацию из файла.
