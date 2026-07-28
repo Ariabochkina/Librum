@@ -1,7 +1,7 @@
 ﻿using Library;
 using Spectre.Console;
 //AI_COMMENTS
-namespace Project4_Library
+namespace Librum
 {
     /// <summary>
     /// Класс, предоставляющий метод для добавления книги в библиотеку.

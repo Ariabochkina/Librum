@@ -1,7 +1,7 @@
 ﻿using Spectre.Console;
 using Library;
 //AI_COMMENTS
-namespace Project4_Library
+namespace Librum
 {
     /// <summary>
     /// Класс, который содержит статические методы, позволяющие изменять информацию о книге.

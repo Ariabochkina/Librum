@@ -1,6 +1,6 @@
 ﻿using Library;
 //AI_COMMENTS
-namespace Project4_Library
+namespace Librum
 {
     /// <summary>
     /// Класс, который предлагает 5 книг с наивысшей оценкой, которые еще не были оценены.

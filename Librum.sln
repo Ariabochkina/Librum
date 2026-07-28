@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project4_Library", "ConsoleApp21\Project4_Library.csproj", "{B9CC92E0-2B64-4AF3-A5ED-8145E64945C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Librum", "Librum\Librum.csproj", "{B9CC92E0-2B64-4AF3-A5ED-8145E64945C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{813A7500-966A-4EB2-943A-25CA17051DE7}"
 EndProject

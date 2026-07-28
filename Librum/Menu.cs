@@ -2,7 +2,7 @@
 using Library; 
 using Files;
 //AI_COMMENTS
-namespace Project4_Library
+namespace Librum
 {
     /// <summary>
     /// Класс Menu предоставляет текстовый пользовательский интерфейс для взаимодействия с библиотекой книг.

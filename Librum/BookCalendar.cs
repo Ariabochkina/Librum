@@ -1,7 +1,7 @@
 ﻿using Library;
 using Spectre.Console;
 //AI_COMMENTS
-namespace Project4_Library
+namespace Librum
 {
     /// <summary>
     /// Класс, который создает календарь, отображающий количество книг,

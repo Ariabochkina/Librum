@@ -5,7 +5,7 @@
  * B-side
  */
 //AI_COMMENTS
-namespace Project4_Library
+namespace Librum
 {
     public static class Program
     {
